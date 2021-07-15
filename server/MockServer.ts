@@ -7,14 +7,21 @@ const baseUrl = 'https://evaluation.api.2hire.io/v4/user';
 const readMockData = (type: DataType, shouldFail = false) => {
     switch (type) {
         case DataType.AllVehicles:
-            if (MockServerManager.shared.vehicleState === MockServerVehicleState.Free) {
+            if (
+                MockServerManager.shared.vehicleState ===
+                MockServerVehicleState.Free
+            ) {
                 return MockServerManager.shared.allVehiclesDataFree;
             } else {
                 return {
                     ...MockServerManager.shared.allVehiclesDataFree,
                     data: MockServerManager.shared.allVehiclesDataFree.data
-                        .filter((elem) => elem.id === MockServerManager.shared.bookedVehicleId)
-                        .map((elem) => {
+                        .filter(
+                            (elem: any) =>
+                                elem.id ===
+                                MockServerManager.shared.bookedVehicleId,
+                        )
+                        .map((elem: any) => {
                             return {
                                 ...elem,
                                 status:
@@ -27,7 +34,10 @@ const readMockData = (type: DataType, shouldFail = false) => {
                 };
             }
         case DataType.UserStatus:
-            if (MockServerManager.shared.vehicleState === MockServerVehicleState.Free) {
+            if (
+                MockServerManager.shared.vehicleState ===
+                MockServerVehicleState.Free
+            ) {
                 return MockServerManager.shared.userStatusDataFree;
             } else {
                 return {
@@ -36,7 +46,9 @@ const readMockData = (type: DataType, shouldFail = false) => {
                         ...MockServerManager.shared.userStatusDataBooked.data,
                         Vehicle: {
                             ...MockServerManager.shared.allVehiclesDataFree.data.filter(
-                                (elem) => elem.id === MockServerManager.shared.bookedVehicleId,
+                                (elem: any) =>
+                                    elem.id ===
+                                    MockServerManager.shared.bookedVehicleId,
                             )[0],
                             status:
                                 MockServerManager.shared.vehicleState ===
@@ -94,8 +106,14 @@ export const startMock = () => {
                 response: async () => {
                     await delay.range(0, 1000);
                     return MockServerManager.shared.serverIsReady
-                        ? { status: 200, body: readMockData(DataType.AllVehicles) }
-                        : { status: 500, body: readMockData(DataType.InternalError) };
+                        ? {
+                              status: 200,
+                              body: readMockData(DataType.AllVehicles),
+                          }
+                        : {
+                              status: 500,
+                              body: readMockData(DataType.InternalError),
+                          };
                 },
             },
         )
@@ -106,8 +124,14 @@ export const startMock = () => {
                 response: async () => {
                     await delay.range(0, 1000);
                     return MockServerManager.shared.serverIsReady
-                        ? { status: 200, body: readMockData(DataType.UserStatus) }
-                        : { status: 500, body: readMockData(DataType.InternalError) };
+                        ? {
+                              status: 200,
+                              body: readMockData(DataType.UserStatus),
+                          }
+                        : {
+                              status: 500,
+                              body: readMockData(DataType.InternalError),
+                          };
                 },
             },
         )
@@ -115,16 +139,25 @@ export const startMock = () => {
             RegExp(`${vehiclesBasePath}/start`),
             {},
             {
-                response: async (url) => {
+                response: async url => {
                     await delay.range(2000, 6000);
                     const regex = RegExp('([0-9]+)/(?:start|stop|book)');
                     const nanOrVid = Number(regex.exec(url)?.[1] ?? 0);
                     const vid = Number.isNaN(nanOrVid) ? 0 : nanOrVid;
                     return MockServerManager.shared.serverIsReady
-                        ? MockServerManager.shared.vehicleState !== MockServerVehicleState.Booked
-                            ? { status: 409, body: readMockData(DataType.VehicleStatusNotCorrect) }
+                        ? MockServerManager.shared.vehicleState !==
+                          MockServerVehicleState.Booked
+                            ? {
+                                  status: 409,
+                                  body: readMockData(
+                                      DataType.VehicleStatusNotCorrect,
+                                  ),
+                              }
                             : vid !== MockServerManager.shared.bookedVehicleId
-                            ? { status: 409, body: readMockData(DataType.VehicleNotBooked) }
+                            ? {
+                                  status: 409,
+                                  body: readMockData(DataType.VehicleNotBooked),
+                              }
                             : {
                                   status: 200,
                                   body: (() => {
@@ -142,7 +175,10 @@ export const startMock = () => {
                                       return temp;
                                   })(),
                               }
-                        : { status: 500, body: readMockData(DataType.InternalError) };
+                        : {
+                              status: 500,
+                              body: readMockData(DataType.InternalError),
+                          };
                 },
             },
         )
@@ -150,16 +186,25 @@ export const startMock = () => {
             RegExp(`${vehiclesBasePath}/stop`),
             {},
             {
-                response: async (url) => {
+                response: async url => {
                     await delay.range(2000, 6000);
                     const regex = RegExp('([0-9]+)/(?:start|stop|book)');
                     const nanOrVid = Number(regex.exec(url)?.[1] ?? 0);
                     const vid = Number.isNaN(nanOrVid) ? 0 : nanOrVid;
                     return MockServerManager.shared.serverIsReady
-                        ? MockServerManager.shared.vehicleState !== MockServerVehicleState.Running
-                            ? { status: 409, body: readMockData(DataType.VehicleStatusNotCorrect) }
+                        ? MockServerManager.shared.vehicleState !==
+                          MockServerVehicleState.Running
+                            ? {
+                                  status: 409,
+                                  body: readMockData(
+                                      DataType.VehicleStatusNotCorrect,
+                                  ),
+                              }
                             : vid !== MockServerManager.shared.bookedVehicleId
-                            ? { status: 409, body: readMockData(DataType.VehicleNotBooked) }
+                            ? {
+                                  status: 409,
+                                  body: readMockData(DataType.VehicleNotBooked),
+                              }
                             : {
                                   status: 200,
                                   body: (() => {
@@ -173,13 +218,17 @@ export const startMock = () => {
                                               ? MockServerVehicleState.Running
                                               : MockServerVehicleState.Free,
                                           shouldFail
-                                              ? MockServerManager.shared.bookedVehicleId
+                                              ? MockServerManager.shared
+                                                    .bookedVehicleId
                                               : null,
                                       );
                                       return temp;
                                   })(),
                               }
-                        : { status: 500, body: readMockData(DataType.InternalError) };
+                        : {
+                              status: 500,
+                              body: readMockData(DataType.InternalError),
+                          };
                 },
             },
         )
@@ -187,14 +236,20 @@ export const startMock = () => {
             RegExp(`${vehiclesBasePath}/book`),
             {},
             {
-                response: async (url) => {
+                response: async url => {
                     await delay.range(2000, 6000);
                     const regex = RegExp('([0-9]+)/(?:start|stop|book)');
                     const nanOrVid = Number(regex.exec(url)?.[1] ?? 0);
                     const vid = Number.isNaN(nanOrVid) ? 0 : nanOrVid;
                     return MockServerManager.shared.serverIsReady
-                        ? MockServerManager.shared.vehicleState !== MockServerVehicleState.Free
-                            ? { status: 409, body: readMockData(DataType.VehicleStatusNotCorrect) }
+                        ? MockServerManager.shared.vehicleState !==
+                          MockServerVehicleState.Free
+                            ? {
+                                  status: 409,
+                                  body: readMockData(
+                                      DataType.VehicleStatusNotCorrect,
+                                  ),
+                              }
                             : {
                                   status: 200,
                                   body: (() => {
@@ -212,7 +267,10 @@ export const startMock = () => {
                                       return temp;
                                   })(),
                               }
-                        : { status: 500, body: readMockData(DataType.InternalError) };
+                        : {
+                              status: 500,
+                              body: readMockData(DataType.InternalError),
+                          };
                 },
             },
         )

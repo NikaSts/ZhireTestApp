@@ -11,39 +11,8 @@ export default class MockServerManager {
 
     public get mockVehicleIds() {
         return [
-            489,
-            549,
-            47,
-            51,
-            438,
-            48,
-            46,
-            2,
-            322,
-            53,
-            49,
-            346,
-            271,
-            231,
-            50,
-            4,
-            13,
-            14,
-            15,
-            16,
-            24,
-            25,
-            26,
-            27,
-            28,
-            29,
-            41,
-            42,
-            44,
-            45,
-            1,
-            23,
-            58,
+            489, 549, 47, 51, 438, 48, 46, 2, 322, 53, 49, 346, 271, 231, 50, 4,
+            13, 14, 15, 16, 24, 25, 26, 27, 28, 29, 41, 42, 44, 45, 1, 23, 58,
         ];
     }
 
@@ -117,9 +86,12 @@ export default class MockServerManager {
     constructor() {
         this.restoreServerState();
         this.setupMockData()
-            .then((ready) => {
+            .then(ready => {
                 this._serverIsReady = ready;
-                this.chaosMonkeyTimer = setInterval(this.chaosMonkeyTimerTrigger, 60 * 1000 * 2);
+                this.chaosMonkeyTimer = setInterval(
+                    this.chaosMonkeyTimerTrigger,
+                    60 * 1000 * 2,
+                );
             })
             .catch(() => {
                 console.warn('Could not start server');
@@ -127,7 +99,10 @@ export default class MockServerManager {
             });
     }
 
-    public changeState = (state: MockServerVehicleState, bookedVehicleId: number | null) => {
+    public changeState = (
+        state: MockServerVehicleState,
+        bookedVehicleId: number | null,
+    ) => {
         this._vehicleState = state;
         this._bookedVehicleId = bookedVehicleId;
         console.log('CHANGED STATE', this.vehicleState, this.bookedVehicleId);
@@ -187,18 +162,27 @@ export default class MockServerManager {
 
     private restoreServerState = () => {
         AsyncStorage.getItem('serverState')
-            .then((stateString) => {
+            .then(stateString => {
                 const stateObject = JSON.parse(stateString!);
                 const decodedVehicleState = stateObject?.vehicleState;
-                if (Object.values(MockServerVehicleState).includes(decodedVehicleState)) {
-                    this._vehicleState = decodedVehicleState as MockServerVehicleState;
+                if (
+                    Object.values(MockServerVehicleState).includes(
+                        decodedVehicleState,
+                    )
+                ) {
+                    this._vehicleState =
+                        decodedVehicleState as MockServerVehicleState;
                 } else {
                     this._vehicleState = MockServerVehicleState.Free;
                 }
                 this._bookedVehicleId = stateObject?.bookedVehicleId ?? null;
-                console.log('RESTORED STATE', this._vehicleState, this._bookedVehicleId);
+                console.log(
+                    'RESTORED STATE',
+                    this._vehicleState,
+                    this._bookedVehicleId,
+                );
             })
-            .catch((error) => {
+            .catch(error => {
                 console.log(error);
                 this._vehicleState = MockServerVehicleState.Free;
                 this._bookedVehicleId = null;

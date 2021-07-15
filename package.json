@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
+    "@types/styled-components-react-native": "^5.1.1",
     "delay": "^5.0.0",
     "fetch-mock": "^9.11.0",
     "react": "17.0.1",

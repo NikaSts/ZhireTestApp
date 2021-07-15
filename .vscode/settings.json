@@ -2,6 +2,10 @@
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	"[typescriptreact]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
 	},
+	"[javascript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"prettier.useTabs": true
 }

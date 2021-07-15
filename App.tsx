@@ -20,38 +20,38 @@ import React from 'react';
 //  } from 'react-native';
 
 import styled from 'styled-components/native';
-import {startMock} from './server/MockServer';
+import { startMock } from './server/MockServer';
 const logoImage = require('./assets/2hireLogo/2hireLogo.png');
 
 startMock();
 
 const App = () => {
-  return (
-    <Container>
-      <ImageContainer>
-        <Logo source={logoImage} />
-      </ImageContainer>
-    </Container>
-  );
+    return (
+        <Container>
+            <ImageContainer>
+                <Logo source={logoImage} />
+            </ImageContainer>
+        </Container>
+    );
 };
 
 const Container = styled.View`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const ImageContainer = styled.View`
-  width: 50%;
+    width: 50%;
 `;
 
 const Logo = styled.Image`
-  width: 100%;
-  resize-mode: contain;
-  overflow: hidden;
-  border-radius: 800px;
+    width: 100%;
+    resize-mode: contain;
+    overflow: hidden;
+    border-radius: 800px;
 `;
 
 export default App;
