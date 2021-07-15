@@ -1,0 +1,8 @@
+{
+    "status": false,
+    "error": {
+        "type": "vehicle_not_booked",
+        "description": "The requested vehicle is not assigned to you, please book it or try with another one"
+    },
+    "data": null
+}

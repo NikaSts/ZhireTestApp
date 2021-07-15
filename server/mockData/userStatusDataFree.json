@@ -1,0 +1,11 @@
+{
+    "status": true,
+    "error": null,
+    "data": {
+        "id": "349",
+        "name": "Mario",
+        "surname": "Rossi",
+        "status": "ACTIVATED",
+        "Vehicle": null
+    }
+}

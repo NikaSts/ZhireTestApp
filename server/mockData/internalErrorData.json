@@ -1,0 +1,8 @@
+{
+    "status": false,
+    "error": {
+        "type": "internal",
+        "description": "The server encountered an internal error, please try again later"
+    },
+    "data": null
+}

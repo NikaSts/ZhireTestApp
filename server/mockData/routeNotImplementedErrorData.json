@@ -1,0 +1,8 @@
+{
+    "status": false,
+    "error": {
+        "type": "no_route",
+        "description": "The route requested is not available, please check your request"
+    },
+    "data": null
+}

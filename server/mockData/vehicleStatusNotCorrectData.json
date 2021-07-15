@@ -1,0 +1,8 @@
+{
+    "status": false,
+    "error": {
+        "type": "vehicle_status_not_correct",
+        "description": "The action requested couldn't be performed with this vehicle right now, please check the vehicle's status"
+    },
+    "data": null
+}

@@ -1,0 +1,8 @@
+{
+    "status": false,
+    "error": {
+        "type": "no_vehicle",
+        "description": "The vehicle selected is currently not available or doesn't exist, please select another one"
+    },
+    "data": null
+}
